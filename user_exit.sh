@@ -211,3 +211,8 @@ sudo -u $USER certutil -A -n "Ceph Dashboard Root CA" -t "C,," -i $ROOT_CA_FILE 
 sudo -u $USER certutil -L -d sql:$CERT_DB_DIR
 
 echo "Firefox certificate import complete."
+
+# Copy Ceph admin keys to workstation
+curl https://public.dhe.ibm.com/ibmdl/export/pub/storage/ceph/ibm-storage-ceph-7-rhel-9.repo | sudo tee /etc/yum.repos.d/ibm-storage-ceph-7-rhel-9.repo
+dnf install ceph-common -y
+scp -pr ceph-node1:/etc/ceph/ /etc/
