@@ -216,3 +216,4 @@ echo "Firefox certificate import complete."
 curl https://public.dhe.ibm.com/ibmdl/export/pub/storage/ceph/ibm-storage-ceph-7-rhel-9.repo | sudo tee /etc/yum.repos.d/ibm-storage-ceph-7-rhel-9.repo
 dnf install ceph-common -y
 scp -pr ceph-node1:/etc/ceph/ /etc/
+exit 0
