@@ -69,6 +69,11 @@ pkill firefox
 echo 'user_pref("browser.startup.homepage", "'$FILE_URL'|'$SECOND_URL'");' >> "$USER_JS_PATH"
 echo "Firefox will open with $FILE_URL and $SECOND_URL on startup."
 
+for SERVER in 1 2 3 4
+do
+ssh ceph-node${SERVER} "systemctl unmask rpcbind.socket ; systemctl unmask rpcbind.service ; systemctl enable --now rpcbind"
+done
+
 # Copy Ceph admin keys to workstation
 curl https://public.dhe.ibm.com/ibmdl/export/pub/storage/ceph/ibm-storage-ceph-7-rhel-9.repo | sudo tee /etc/yum.repos.d/ibm-storage-ceph-7-rhel-9.repo
 dnf install ceph-common -y
