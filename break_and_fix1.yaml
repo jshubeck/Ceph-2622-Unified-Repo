@@ -2,6 +2,8 @@
 - name: Perform Ceph break and fix operations
   hosts: localhost
   become: true
+  vars:
+    target_pg: "8.2"  # Replace with your specific PG ID
   tasks:
     - name: Break and fix operation 1 - Remove OSD auth
       shell: ceph auth rm osd.1
@@ -49,6 +51,21 @@
       shell: ceph orch apply nfs nfssrv
       ignore_errors: true
       register: deploy_result
+
+    - name: Get the OSDs responsible for the target PG
+      shell: ceph pg map {{ target_pg }} | grep 'acting' | awk '{print $NF}' | tr -d '[]'
+      register: osd_list
+      changed_when: false
+
+    - name: Parse the OSD list into an array
+      set_fact:
+        pg_osds: "{{ osd_list.stdout.split(',') }}"
+
+    - name: Stop the first OSD for the target PG
+      shell: ceph orch daemon stop osd.{{ item }}
+      loop: "{{ pg_osds[:2] }}"  # Only stop the first two OSDs to trigger incomplete state
+      ignore_errors: true
+
 
     - name: Wait for large OMAP object creation to complete
       async_status:
