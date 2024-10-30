@@ -1,0 +1,59 @@
+---
+- name: Perform Ceph break and fix operations
+  hosts: localhost
+  become: true
+  tasks:
+    - name: Break and fix operation 1 - Remove OSD auth
+      shell: ceph auth rm osd.1
+      no_log: true
+
+    - name: Break and fix operation 1 - Restart OSD daemon
+      shell: ceph orch daemon restart osd.1
+      no_log: true
+
+    - name: Break and fix operation 2 - Set RGW zone to nozone
+      shell: ceph config set client.rgw rgw_zone nozone
+      no_log: true
+
+    - name: Break and fix operation 2 - Restart RGW service
+      shell: ceph orch restart rgw.objectgw
+      no_log: true
+
+    - name: Break and fix operation 3 - Set pool size to 5
+      shell: ceph osd pool set cephfs.cephfs.meta size 5
+      no_log: true
+
+    - name: Break and fix operation 3 - Set pool min_size to 3
+      shell: ceph osd pool set cephfs.cephfs.meta min_size 3
+      no_log: true
+
+    - name: Break and fix operation 3 - Restart MDS daemon
+      shell: ceph orch restart mds.cephfs
+      no_log: true
+
+    - name: Break and fix operation 4 - Create large single OMAP object to trigger warning
+      shell: |
+        for i in {1..10000}; do
+          rados setomapval large-omap-object key-$i value-$i --pool default.rgw.buckets.index
+        done
+      async: 3600
+      poll: 0
+      no_log: true
+      register: async_task
+
+    - name: Break and fix operation 5 - Set Ceph image tag to a non-existent version
+      shell: ceph config set global mgr/cephadm/container_image_base 8.8-8-8
+      no_log: true
+
+    - name: Break and fix operation 5 - Deploy a new Ceph service that will fail
+      shell: ceph orch apply nfs nfssrv
+      ignore_errors: true
+      register: deploy_result
+
+    - name: Wait for large OMAP object creation to complete
+      async_status:
+        jid: "{{ async_task.ansible_job_id }}"
+      register: job_result
+      until: job_result.finished
+      retries: 60
+      delay: 30
