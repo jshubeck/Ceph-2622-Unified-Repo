@@ -4,6 +4,8 @@ uid=$(grep -m 1 'ceph-node' /etc/hosts | awk '{print $2}' | sed 's/.*-\(.*\)/\1/
 
 yaml_file="/root/ceph-cluster-hosts.yaml"
 
+yum install ansible -y
+
 # Create the YAML configuration file with static entries and UID placeholders
 cat <<EOF > "$yaml_file"
 service_type: host
