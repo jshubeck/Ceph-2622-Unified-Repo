@@ -5,72 +5,72 @@
   vars:
     target_pg: "8.2"  # Replace with your specific PG ID
   tasks:
-    - name: Break and fix operation 1 - Remove OSD auth
+    - name: Break and fix operation 1
       shell: ceph auth rm osd.1
       no_log: true
 
-    - name: Break and fix operation 1 - Restart OSD daemon
+    - name: Break and fix operation 1
       shell: ceph orch daemon restart osd.1
       no_log: true
 
-    - name: Break and fix operation 2 - Set RGW zone to nozone
+    - name: Break and fix operation 2
       shell: ceph config set client.rgw rgw_zone nozone
       no_log: true
 
-    - name: Break and fix operation 2 - Restart RGW service
+    - name: Break and fix operation 2 
       shell: ceph orch restart rgw.objectgw
       no_log: true
 
-    - name: Break and fix operation 3 - Set pool size to 5
+    - name: Break and fix operation 3 
       shell: ceph osd pool set cephfs.cephfs.meta size 5
       no_log: true
 
-    - name: Break and fix operation 3 - Set pool min_size to 3
+    - name: Break and fix operation 3
       shell: ceph osd pool set cephfs.cephfs.meta min_size 3
       no_log: true
 
-    - name: Break and fix operation 3 - Restart MDS daemon
+    - name: Break and fix operation 3
       shell: ceph orch restart mds.cephfs
       no_log: true
 
-    - name: Break and fix operation 4 - Create large single OMAP object to trigger warning
+    - name: Break and fix operation 4
       shell: |
         for i in {1..10000}; do
-          rados setomapval large-omap-object key-$i value-$i --pool default.rgw.buckets.index
+          rados setomapval large-omap-object key-$i value-$i --pool default.rgw.meta
         done
       async: 3600
       poll: 0
       no_log: true
       register: async_task
 
-    - name: Break and fix operation 5 - Set Ceph image tag to a non-existent version
+    - name: Break and fix operation 5
       shell: ceph config set global mgr/cephadm/container_image_base 8.8-8-8
       no_log: true
 
-    - name: Break and fix operation 5 - Deploy a new Ceph service that will fail
+    - name: Break and fix operation 5
       shell: ceph orch apply nfs nfssrv
       ignore_errors: true
       register: deploy_result
 
-    - name: Get the OSDs responsible for the target PG
+    - name: Break 6
       shell: ceph pg map {{ target_pg }} | grep 'acting' | awk '{print $NF}' | tr -d '[]'
       register: osd_list
       changed_when: false
 
-    - name: Parse the OSD list into an array
+    - name: Break 6
       set_fact:
         pg_osds: "{{ osd_list.stdout.split(',') }}"
 
-    - name: Stop the first OSD for the target PG
+    - name: Break 6
       shell: ceph orch daemon stop osd.{{ item }}
       loop: "{{ pg_osds[:2] }}"  # Only stop the first two OSDs to trigger incomplete state
       ignore_errors: true
 
 
-    - name: Wait for large OMAP object creation to complete
+    - name: Don't stop this playbook; leave it running during the session
       async_status:
         jid: "{{ async_task.ansible_job_id }}"
       register: job_result
       until: job_result.finished
-      retries: 60
+      retries: 600
       delay: 30
