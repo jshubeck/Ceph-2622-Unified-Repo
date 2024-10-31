@@ -25,6 +25,7 @@ labels:
   - mon
   - osd
   - rgw
+  - mds
 ---
 
 service_type: host
@@ -33,6 +34,7 @@ hostname: ceph-node3-$uid
 labels:
   - mon
   - osd
+  - nvmeof
 ---
 
 service_type: host
@@ -41,6 +43,7 @@ hostname: ceph-node4-$uid
 labels:
   - mon
   - osd
+  - nfs
 ---
 service_type: mds
 service_id: cephfs
@@ -79,4 +82,4 @@ ceph osd pool application enable rbdpool rbd
 # Create the CephFS volume.
 ceph fs volume create cephfs
 
-echo "All Ceph nodes have been added to the cluster using $yaml_file."
+echo "All Ceph nodes have been added to the cluster using $yaml_file. It will take around 5 minutes for the nodes to be added and the cluster in health+ok status"
