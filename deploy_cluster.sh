@@ -67,6 +67,14 @@ placement:
   label: "rgw"
 spec:
   rgw_frontend_port: 8080
+---
+service_type: nfs
+service_id: nfsc
+placement:
+  label: "nfs"
+spec:
+  port: 2049
+---
 
 EOF
 
@@ -81,5 +89,6 @@ ceph osd pool application enable rbdpool rbd
 
 # Create the CephFS volume.
 ceph fs volume create cephfs
+ceph nfs export create cephfs --cluster-id nfsc --pseudo-path /nfs --fsname cephfs
 
 echo "All Ceph nodes have been added to the cluster using $yaml_file. It will take around 5 minutes for the nodes to be added and the cluster in health+ok status"
