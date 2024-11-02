@@ -44,11 +44,11 @@
       register: async_task
 
     - name: Break and fix operation 5
-      shell: ceph config set global mgr/cephadm/container_image_base 8.8-8-8
+      shell: ceph config set mgr mgr/cephadm/container_image_nvmeof cp.icr.io/cp/ibm-ceph/nvmeof-rhel9:8-8-8-8-8
       no_log: true
 
     - name: Break and fix operation 5
-      shell: ceph orch apply nvmeof rbd '--placement=label:nvmeof'
+      shell: ceph orch apply nvmeof rbd '--placement=label:nvmeof
       ignore_errors: true
       register: deploy_result
 
