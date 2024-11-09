@@ -1,0 +1,41 @@
+---
+- name: Break and fix Lab @
+  hosts: ceph-node1
+  become: true
+  gather_facts: false
+
+  vars:
+    mon_name: ceph-node1 
+
+  tasks:
+
+    - name: break 1
+      shell: ceph fsid
+      register: fsid_output
+      changed_when: false
+
+    - name: break 1
+      set_fact:
+        cluster_fsid: "{{ fsid_output.stdout }}"
+
+    - name: Destroy 1
+      shell:  cephadm ls | jq -r '.[] | select(.name | contains("mon.ceph-node1")) | .name' | head -n1
+      register: mon_service_id_output
+      changed_when: false
+
+    - name: Demolish 1
+      set_fact:
+        mon_service_id: "{{ mon_service_id_output.stdout }}"
+
+    - name: Implode 1
+      set_fact:
+        store_db_path: "/var/lib/ceph/{{ cluster_fsid }}/{{ mon_service_id }}/store.db"
+
+    - name: bye bye 1
+      file:
+        path: "{{ store_db_path }}"
+        state: absent
+
+    - name: done and dusted with 1
+      shell: ceph orch restart mon
+
