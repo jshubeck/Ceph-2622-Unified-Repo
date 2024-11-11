@@ -1,5 +1,5 @@
 ---
-- name: Break and fix Lab @
+- name: Break and fix Lab 2
   hosts: ceph-node1
   become: true
   gather_facts: false
