@@ -89,8 +89,12 @@ ceph osd pool create rbdpool 32 32
 ceph osd pool application enable rbdpool rbd
 
 # Create the CephFS volume.
-ceph fs volume create cephfs
-ceph nfs export create cephfs --cluster-id nfsc --pseudo-path /nfs --fsname cephfs
+ceph fs volume create cephfs 2> /dev/null
+ceph nfs export create cephfs --cluster-id nfsc --pseudo-path /nfs --fsname cephfs 2> /dev/null
 
 echo "The NFS Error can be ignored, this is normal as the .nfs pool is not available yet"
-echo "All Ceph nodes have been added to the cluster using $yaml_file. It will take around 5 minutes for the nodes to be added and the cluster in health+ok status"
+echo "All Ceph nodes have been added to the cluster using $yaml_file."
+echo "##################################################################"
+echo "It will take around 5 minutes for the nodes to be added and the cluster in health+ok status"
+echo "##################################################################"
+
