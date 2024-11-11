@@ -41,4 +41,7 @@
       
     - name: start with 2, and done!
       shell: ceph orch osd rm 4
+      
+    - name: start with 3, and done! fast!
+      shell: ceph osd pool create rbdpoolbck 64 64 replicated
 
