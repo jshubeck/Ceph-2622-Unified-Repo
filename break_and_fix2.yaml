@@ -38,4 +38,7 @@
 
     - name: done and dusted with 1
       shell: ceph orch restart mon
+      
+    - name: start with 2, and done!
+      shell: ceph orch osd rm 4
 
