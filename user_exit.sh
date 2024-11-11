@@ -7,6 +7,7 @@ cp ./cli-helper-1527.html $USER_HOME/cli-helper-1527.html
 mkdir /root/scripts
 cp ./deploy_cluster.sh /root/scripts
 cp ./break_and_fix1.yaml /root/scripts
+cp ./break_and_fix2.yaml /root/scripts
 chown $USER $USER_HOME/cli-helper-1527*
 chmod 644 $USER_HOME/cli-helper-1527*
 ceph config-key get mgr/cephadm/registry_credentials | jq . > /root/scripts/registry.json
