@@ -56,7 +56,7 @@ service_name: osd.all-available-devices
 spec:
   data_devices:
     all: true
-    limit: 2
+    limit: 3
 placement:
   label: "osd"
 ---
