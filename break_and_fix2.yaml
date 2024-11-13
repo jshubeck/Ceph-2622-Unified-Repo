@@ -44,4 +44,7 @@
       
     - name: start with 3, and done! fast!
       shell: ceph osd pool create rbdpoolbck 64 64 replicated
+      
+    - name: Break number 4
+      shell: rm /etc/ceph/ceph.client.admin.keyring
 
