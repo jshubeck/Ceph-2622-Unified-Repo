@@ -10,11 +10,9 @@ cp ./break_and_fix1.yaml /root/scripts
 cp ./break_and_fix2.yaml /root/scripts
 chown $USER $USER_HOME/cli-helper-1527*
 chmod 644 $USER_HOME/cli-helper-1527*
-ceph config-key get mgr/cephadm/registry_credentials | jq . > /root/scripts/registry.json
 ssh ceph-node1 "mkdir /root/scripts"
 scp ./purge_cluster.sh root@ceph-node1:/root/scripts
 scp ./new_cluster_deploy.sh root@ceph-node1:/root/scripts
-scp /root/scripts/registry.json root@ceph-node1:/root/scripts
 
 ## Configure html cli helper file as the default Firefox home page
 PROFILE_DIR=$(find $USER_HOME/.mozilla/firefox -type d -name "*.default*" | head -n 1)
@@ -87,4 +85,7 @@ done
 curl https://public.dhe.ibm.com/ibmdl/export/pub/storage/ceph/ibm-storage-ceph-7-rhel-9.repo | sudo tee /etc/yum.repos.d/ibm-storage-ceph-7-rhel-9.repo
 dnf install ceph-common -y
 scp -pr ceph-node1:/etc/ceph/ /etc/
+sleep 90
+ceph config-key get mgr/cephadm/registry_credentials | jq . > /root/scripts/registry.json
+scp /root/scripts/registry.json root@ceph-node1:/root/scripts
 exit 0
