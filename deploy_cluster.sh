@@ -98,4 +98,29 @@ echo "##################################################################"
 echo "It will take around 5 minutes for the nodes to be added and the cluster in HEALTH_OK status"
 echo "##################################################################"
 echo "##################################################################"
+sleep 15
+
+EXPECTED_OSDS=12
+
+echo "Waiting for $EXPECTED_OSDS OSDs to be up and in and the cluster to be HEALTH_OK..."
+
+while true; do
+    # Get the cluster status in JSON for easier parsing
+    STATUS=$(ceph -s --format json)
+
+    # Extract the current health status and OSD counts
+    HEALTH=$(echo "$STATUS" | jq -r '.health.status')
+    OSD_UP=$(echo "$STATUS" | jq '.osdmap.num_up_osds')
+    OSD_IN=$(echo "$STATUS" | jq '.osdmap.num_in_osds')
+
+    # Check conditions: all OSDs up & in, and HEALTH_OK
+    if [ "$OSD_UP" -eq "$EXPECTED_OSDS" ] && [ "$OSD_IN" -eq "$EXPECTED_OSDS" ] && [ "$HEALTH" = "HEALTH_OK" ]; then
+        echo "All $EXPECTED_OSDS OSDs are up and in, and the cluster is HEALTH_OK."
+        break
+    else
+        echo "Currently: $OSD_UP/$EXPECTED_OSDS OSDs up, $OSD_IN/$EXPECTED_OSDS in, Health: $HEALTH. Rechecking in 30s..."
+        sleep 30
+    fi
+done
+
 
