@@ -1,2 +1,2 @@
-# 1527-Unified-Repo
-1527 Unified Ceph Lab Repo
+# 2622-Ceph-101 
+Lab 2622 - Ceph 101: Configure and Manage
