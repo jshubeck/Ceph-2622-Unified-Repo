@@ -15,6 +15,12 @@ ssh ceph-node1 "mkdir /root/scripts"
 scp ./purge_cluster.sh root@ceph-node1:/root/scripts
 scp ./new_cluster_deploy.sh root@ceph-node1:/root/scripts
 
+# Install AWS CLI
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+chmod -R 755 /usr/local/aws-cli 
+
 ## Configure html cli helper file as the default Firefox home page
 PROFILE_DIR=$(find $USER_HOME/.mozilla/firefox -type d -name "*.default*" | head -n 1)
 if [ -z "$PROFILE_DIR" ]; then
