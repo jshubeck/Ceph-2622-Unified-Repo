@@ -15,11 +15,24 @@ ssh ceph-node1 "mkdir /root/scripts"
 scp ./purge_cluster.sh root@ceph-node1:/root/scripts
 scp ./new_cluster_deploy.sh root@ceph-node1:/root/scripts
 
-# Install AWS CLI
+# Install AWS CLI client
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 unzip awscliv2.zip
 sudo ./aws/install
-chmod -R 755 /usr/local/aws-cli 
+chmod -R 755 /usr/local/aws-cli
+
+# Install the MinIO (MC) client
+curl https://dl.min.io/client/mc/release/linux-amd64/mc \
+--create-dirs -o $HOME/minio-binaries/mc
+chmod +x $HOME/minio-binaries/mc
+cp $HOME/minio-binaries/mc /usr/local/bin
+
+# Install the RCLONE client
+curl -O https://downloads.rclone.org/rclone-current-linux-amd64.zip
+unzip rclone-current-linux-amd64.zip
+cp rclone-*-linux-amd64/rclone /usr/bin/
+chown root:root /usr/bin/rclone
+chmod 755 /usr/bin/rclone
 
 ## Configure html cli helper file as the default Firefox home page
 PROFILE_DIR=$(find $USER_HOME/.mozilla/firefox -type d -name "*.default*" | head -n 1)
