@@ -9,4 +9,4 @@ cephadm \
 	--ssh-user=${USER} \
 	--mon-ip ${ip} \
 	--apply-spec /root/scripts/ceph-cluster-hosts.yaml \
-        --ssh-config /etc/ssh/ssh_config.d/99-hosts.conf
+    --ssh-config /etc/ssh/ssh_config.d/99-hosts.conf

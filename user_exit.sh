@@ -1,4 +1,5 @@
 #!/bin/bash
+
 # Get helper file for workstation
 USER_HOME=$(cat /etc/passwd | grep ^U | cut -d: -f6)
 USER=$(cat /etc/passwd | grep ^U | cut -d: -f1)
@@ -96,6 +97,7 @@ pkill firefox
 echo 'user_pref("browser.startup.homepage", "'$FILE_URL'|'$SECOND_URL'");' >> "$USER_JS_PATH"
 echo "Firefox will open with $FILE_URL and $SECOND_URL on startup."
 
+# Install rpcbind on every node - required for Ceph NFS service to start
 for SERVER in 1 2 3 4
 do
 ssh ceph-node${SERVER} "systemctl unmask rpcbind.socket ; systemctl unmask rpcbind.service ; systemctl enable --now rpcbind"
