@@ -25,7 +25,7 @@ chmod -R 755 /usr/local/aws-cli
 # Install the MinIO (MC) client
 curl https://dl.min.io/client/mc/release/linux-amd64/mc \
 --create-dirs -o $HOME/minio-binaries/mc
-chmod +x $HOME/minio-binaries/mc
+chmod 755 $HOME/minio-binaries/mc
 cp $HOME/minio-binaries/mc /usr/local/bin
 
 # Install the RCLONE client
