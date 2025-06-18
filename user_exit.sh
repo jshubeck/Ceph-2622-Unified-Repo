@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Get helper file for workstation
+## Get helper file for workstation
 USER_HOME=$(cat /etc/passwd | grep ^U | cut -d: -f6)
 USER=$(cat /etc/passwd | grep ^U | cut -d: -f1)
 cp ./cli-helper-1527.adoc $USER_HOME/cli-helper-1527.adoc
@@ -16,7 +16,7 @@ ssh ceph-node1 "mkdir /root/scripts.d"
 scp ./purge_cluster.sh root@ceph-node1:/root/scripts.d
 scp ./new_cluster_deploy.sh root@ceph-node1:/root/scripts.d
 
-# Install AWS CLI client
+## Install AWS CLI client
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 unzip awscliv2.zip
 sudo ./aws/install
@@ -25,10 +25,11 @@ chmod -R 755 /usr/local/aws-cli
 # Install the MinIO (MC) client
 curl https://dl.min.io/client/mc/release/linux-amd64/mc \
 --create-dirs -o $HOME/minio-binaries/mc
-chmod 755 $HOME/minio-binaries/mc
+# chmod 755 $HOME/minio-binaries/mc
 cp $HOME/minio-binaries/mc /usr/local/bin
+chmod 755 /usr/local/bin
 
-# Install the RCLONE client
+## Install the RCLONE client
 curl -O https://downloads.rclone.org/rclone-current-linux-amd64.zip
 unzip rclone-current-linux-amd64.zip
 cp rclone-*-linux-amd64/rclone /usr/bin/
@@ -44,10 +45,10 @@ if [ -z "$PROFILE_DIR" ]; then
     pkill -f firefox
 fi
 
-# Search for the prefs.js file in the user's home directory
+## Search for the prefs.js file in the user's home directory
 PREFS_PATH=$(find $USER_HOME -type f -name "prefs.js" | grep ".mozilla/firefox" | head -n 1)
 
-# Check if the prefs.js file was found
+## Check if the prefs.js file was found
 if [ -z "$PREFS_PATH" ]; then
     echo "prefs.js file not found in the home directory."
     exit 1
@@ -97,13 +98,13 @@ pkill firefox
 echo 'user_pref("browser.startup.homepage", "'$FILE_URL'|'$SECOND_URL'");' >> "$USER_JS_PATH"
 echo "Firefox will open with $FILE_URL and $SECOND_URL on startup."
 
-# Install rpcbind on every node - required for Ceph NFS service to start
+## Install rpcbind on every node - required for Ceph NFS service to start
 for SERVER in 1 2 3 4
 do
 ssh ceph-node${SERVER} "systemctl unmask rpcbind.socket ; systemctl unmask rpcbind.service ; systemctl enable --now rpcbind"
 done
 
-# Copy Ceph admin keys to workstation
+## Copy Ceph admin keys to workstation
 curl https://public.dhe.ibm.com/ibmdl/export/pub/storage/ceph/ibm-storage-ceph-8-rhel-9.repo | sudo tee /etc/yum.repos.d/ibm-storage-ceph-8-rhel-9.repo
 dnf install ceph-common -y
 scp -pr ceph-node1:/etc/ceph/ /etc/
