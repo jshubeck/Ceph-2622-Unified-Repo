@@ -3,15 +3,15 @@
 ## Get helper file for workstation
 USER_HOME=$(cat /etc/passwd | grep ^U | cut -d: -f6)
 USER=$(cat /etc/passwd | grep ^U | cut -d: -f1)
-cp ./cli-helper-1527.adoc $USER_HOME/cli-helper-1527.adoc
-cp ./cli-helper-1527.html $USER_HOME/cli-helper-1527.html
+cp ./cli-helper-2622.adoc $USER_HOME/cli-helper-2622.adoc
+cp ./cli-helper-2622.html $USER_HOME/cli-helper-2622.html
 mkdir /root/scripts.d
 touch /root/scripts.d/lab-2622-welcome.txt
 cp ./deploy_cluster.sh /root/scripts.d
 cp ./break_and_fix1.yaml /root/scripts.d
 cp ./break_and_fix2.yaml /root/scripts.d
-chown $USER $USER_HOME/cli-helper-1527*
-chmod 644 $USER_HOME/cli-helper-1527*
+chown $USER $USER_HOME/cli-helper-2622*
+chmod 644 $USER_HOME/cli-helper-2622*
 ssh ceph-node1 "mkdir /root/scripts.d"
 scp ./purge_cluster.sh root@ceph-node1:/root/scripts.d
 scp ./new_cluster_deploy.sh root@ceph-node1:/root/scripts.d
@@ -27,7 +27,7 @@ curl https://dl.min.io/client/mc/release/linux-amd64/mc \
 --create-dirs -o $HOME/minio-binaries/mc
 # chmod 755 $HOME/minio-binaries/mc
 cp $HOME/minio-binaries/mc /usr/local/bin
-chmod 755 /usr/local/bin
+chmod 755 /usr/local/bin/mc
 
 ## Install the RCLONE client
 curl -O https://downloads.rclone.org/rclone-current-linux-amd64.zip
@@ -74,7 +74,7 @@ EOF
 fi
 
 ## Define the path to the local HTML file
-HTML_FILE_PATH="$USER_HOME/cli-helper-1527.html"
+HTML_FILE_PATH="$USER_HOME/cli-helper-2622.html"
 
 ## Convert the file path to a URL format
 FILE_URL="file://$HTML_FILE_PATH"
