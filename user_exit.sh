@@ -5,16 +5,16 @@ USER_HOME=$(cat /etc/passwd | grep ^U | cut -d: -f6)
 USER=$(cat /etc/passwd | grep ^U | cut -d: -f1)
 cp ./cli-helper-1527.adoc $USER_HOME/cli-helper-1527.adoc
 cp ./cli-helper-1527.html $USER_HOME/cli-helper-1527.html
-mkdir /root/scripts
-touch /root/scripts/lab-2622-welcome.txt
-cp ./deploy_cluster.sh /root/scripts
-cp ./break_and_fix1.yaml /root/scripts
-cp ./break_and_fix2.yaml /root/scripts
+mkdir /root/scripts.d
+touch /root/scripts.d/lab-2622-welcome.txt
+cp ./deploy_cluster.sh /root/scripts.d
+cp ./break_and_fix1.yaml /root/scripts.d
+cp ./break_and_fix2.yaml /root/scripts.d
 chown $USER $USER_HOME/cli-helper-1527*
 chmod 644 $USER_HOME/cli-helper-1527*
-ssh ceph-node1 "mkdir /root/scripts"
-scp ./purge_cluster.sh root@ceph-node1:/root/scripts
-scp ./new_cluster_deploy.sh root@ceph-node1:/root/scripts
+ssh ceph-node1 "mkdir /root/scripts.d"
+scp ./purge_cluster.sh root@ceph-node1:/root/scripts.d
+scp ./new_cluster_deploy.sh root@ceph-node1:/root/scripts.d
 
 # Install AWS CLI client
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
@@ -108,6 +108,6 @@ curl https://public.dhe.ibm.com/ibmdl/export/pub/storage/ceph/ibm-storage-ceph-8
 dnf install ceph-common -y
 scp -pr ceph-node1:/etc/ceph/ /etc/
 sleep 90
-ceph config-key get mgr/cephadm/registry_credentials | jq . > /root/scripts/registry.json
-scp /root/scripts/registry.json root@ceph-node1:/root/scripts
+ceph config-key get mgr/cephadm/registry_credentials | jq . > /root/scripts.d/registry.json
+scp /root/scripts.d/registry.json root@ceph-node1:/root/scripts.d
 exit 0
