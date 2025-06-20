@@ -1,0 +1,190 @@
+{
+  "exportProductsMode" : "selected",
+  "oneTimeExportOptions" : {
+    "appearance" : "automatic",
+    "attributes" : {
+
+    },
+    "resourcesMode" : "separateResources",
+    "styleID" : "app.adoc-studio.style.classic"
+  },
+  "oneTimeExportOptionsFormat" : "html",
+  "oneTimeExportUsesPreview" : true,
+  "products" : [
+
+  ],
+  "root" : {
+    "children" : [
+      {
+        "children" : [
+          {
+            "createIndexFile" : false,
+            "folderSubType" : 1,
+            "id" : "4C9E7265-E2BA-48BA-B7AF-488D829B21E7",
+            "indexFileName" : "index.adoc",
+            "isHiddenInComposite" : false,
+            "name" : "Media",
+            "sortDirection" : 0,
+            "sortOrder" : 1,
+            "type" : "folder"
+          },
+          {
+            "contentSize" : 6111,
+            "creationDate" : 771771507.4051359,
+            "id" : "D8EEF82C-1B93-4734-AF2E-1400F8E40466",
+            "isHiddenInComposite" : false,
+            "name" : "cli-helper-2622.adoc",
+            "type" : "asciiDocFile"
+          }
+        ],
+        "createIndexFile" : false,
+        "folderSubType" : 0,
+        "id" : "FDB01C78-85E8-4508-8EC4-6C327911F5CF",
+        "indexFileName" : "index.adoc",
+        "isHiddenInComposite" : false,
+        "location" : [
+          "F359FB27-E6A7-5A55-878F-F9FDFE4E7B80",
+          "Ym9va4wDAAAAAAQQMAAAAHvr81g7azXRwm0Ui7CELWEK6+027xQ8KwnUDf+ghi4yiAIAAAQAAAADAwAAAAgAKAUAAAABAQAAVXNlcnMAAAAIAAAAAQEAAGpzaHViZWNrBwAAAAEBAABMaWJyYXJ5AAoAAAABAQAAQ29udGFpbmVycwAAFAAAAAEBAABhcHAuYWRvYy1zdHVkaW8ubWFpbgQAAAABAQAARGF0YRQAAAABAQAAQXV0b3NhdmUgSW5mb3JtYXRpb24OAAAAAQEAAFVudGl0bGVkIDEuYWRzAAAkAAAAAQYAABAAAAAgAAAAMAAAAEAAAABUAAAAcAAAADAAAAB8AAAAmAAAAAgAAAAEAwAA61wAAAAAAAAIAAAABAMAABnMAwAAAAAACAAAAAQDAAAgzAMAAAAAAAgAAAAEAwAAcs0DAAAAAAAIAAAABAMAAFLtpQ4AAAAACAAAAAQDAABT7aUOAAAAAAgAAAAEAwAAVu2lDgAAAAAIAAAABAMAADfvpQ4AAAAACAAAAAQDAAAxfKcOAAAAACQAAAABBgAA3AAAAOwAAAD8AAAADAEAABwBAAAsAQAAPAEAAEwBAABcAQAACAAAAAAEAABBxwGnmSC72BgAAAABAgAAAgAAAAAAAAAPAAAAAAAAAAAAAAAAAAAACAAAAAQDAAAHAAAAAAAAAAQAAAADAwAA9QEAAAgAAAABCQAAZmlsZTovLy8MAAAAAQEAAE1hY2ludG9zaCBIRAgAAAAEAwAAAJCClucAAAAIAAAAAAQAAEHG45qFAAAAJAAAAAEBAABDM0U1QTFBNi03N0M4LTQyQTUtQTI4Qi1DMjcxQjUyQTZBOTcYAAAAAQIAAIEAAAABAAAA7xMAAAEAAAAAAAAAAAAAAAEAAAABAQAALwAAAAAAAAABBQAAzAAAAP7\/\/\/8BAAAAAAAAABAAAAAEEAAAsAAAAAAAAAAFEAAAbAEAAAAAAAAQEAAAqAEAAAAAAABAEAAAmAEAAAAAAAACIAAAdAIAAAAAAAAFIAAA5AEAAAAAAAAQIAAA9AEAAAAAAAARIAAAKAIAAAAAAAASIAAACAIAAAAAAAATIAAAGAIAAAAAAAAgIAAAVAIAAAAAAAAwIAAAgAIAAAAAAAABwAAAyAEAAAAAAAARwAAAIAAAAAAAAAASwAAA2AEAAAAAAAAQ0AAABAAAAAAAAAA="
+        ],
+        "name" : "tz-lab-2622-helper.ads",
+        "pathFromProjectFolder" : "",
+        "sortDirection" : 0,
+        "sortOrder" : 0,
+        "type" : "anchorFolder"
+      }
+    ],
+    "createIndexFile" : false,
+    "folderSubType" : 0,
+    "id" : "629F58A9-4EA3-41BD-B164-51315B21783A",
+    "indexFileName" : "index.adoc",
+    "isHiddenInComposite" : false,
+    "name" : "tz-lab-2622-helper",
+    "sortDirection" : 0,
+    "sortOrder" : 0,
+    "type" : "root"
+  },
+  "windowConfigurationsByUser" : [
+    "A8A704FE-2280-43E2-83CB-AD1BC9D809E9",
+    [
+      {
+        "collapsedWarningCategories" : [
+
+        ],
+        "couplesPreviewContent" : true,
+        "editorNode" : "D8EEF82C-1B93-4734-AF2E-1400F8E40466",
+        "expandedNodes" : [
+          "629F58A9-4EA3-41BD-B164-51315B21783A"
+        ],
+        "focusArea" : "preview",
+        "geometries" : [
+          {
+            "platform" : "mac",
+            "sizes" : [
+              {
+                "height" : 1117,
+                "width" : 1728
+              }
+            ]
+          },
+          {
+            "editorSplitterPosition" : 0.21091645622895622,
+            "frame" : [
+              [
+                -0,
+                79
+              ],
+              [
+                1676,
+                1000
+              ]
+            ],
+            "isSidebarCollapsed" : false,
+            "previewModeDisplayState" : "sourceAndPreview",
+            "sidebarWidth" : 190
+          }
+        ],
+        "navigationHistory" : {
+          "nodes" : [
+            "D8EEF82C-1B93-4734-AF2E-1400F8E40466"
+          ]
+        },
+        "nodeConfigurations" : [
+          "D8EEF82C-1B93-4734-AF2E-1400F8E40466",
+          {
+            "collapsedRanges" : {
+              "ranges" : [
+
+              ]
+            },
+            "collapsedSections" : [
+
+            ],
+            "editorScrollPosition" : {
+              "fraction" : 0,
+              "index" : 1
+            },
+            "editorSelections" : [
+
+            ],
+            "previewScrollPosition" : {
+              "elementPath" : [
+                1,
+                0,
+                0
+              ],
+              "fraction" : -3.2162162162162162,
+              "nextElementPath" : [
+
+              ],
+              "yOffset" : 0
+            }
+          }
+        ],
+        "previewConfiguration" : {
+          "format" : "html",
+          "htmlOptions" : {
+            "appearance" : "automatic",
+            "attributes" : {
+
+            },
+            "resourcesMode" : "separateResources",
+            "styleID" : "app.adoc-studio.style.classic"
+          },
+          "htmlTextZoom" : 1,
+          "pdfDisplayMode" : "singlePageContinuous",
+          "pdfOptions" : {
+            "appearance" : "automatic",
+            "attributes" : {
+
+            },
+            "margins" : {
+              "bottom" : 2,
+              "left" : 2,
+              "right" : 2,
+              "top" : 2
+            },
+            "paperSize" : [
+              21,
+              29.7
+            ],
+            "styleID" : "app.adoc-studio.style.classic"
+          },
+          "pdfZoom" : {
+            "fit" : {
+
+            }
+          },
+          "products" : [
+
+          ]
+        },
+        "previewNode" : "D8EEF82C-1B93-4734-AF2E-1400F8E40466",
+        "selectedNodes" : [
+          "D8EEF82C-1B93-4734-AF2E-1400F8E40466"
+        ],
+        "syncsExpansionState" : true,
+        "syncsScrolling" : true
+      }
+    ]
+  ]
+}
