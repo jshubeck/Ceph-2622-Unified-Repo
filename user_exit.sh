@@ -1,12 +1,12 @@
 #!/bin/bash
 
-## Get helper file for workstation
+## Get the helper file for Bastion workstation
 USER_HOME=$(cat /etc/passwd | grep ^U | cut -d: -f6)
 USER=$(cat /etc/passwd | grep ^U | cut -d: -f1)
 cp ./cli-helper-2622.adoc $USER_HOME/cli-helper-2622.adoc
 cp ./cli-helper-2622.html $USER_HOME/cli-helper-2622.html
-cp ./cli-helper-1527.adoc $USER_HOME/cli-helper-2622.adoc
-cp ./cli-helper-1527.html $USER_HOME/cli-helper-2622.html
+cp ./cli-helper-1527.adoc $USER_HOME/cli-helper-1527.adoc
+cp ./cli-helper-1527.html $USER_HOME/cli-helper-1527.html
 mkdir /root/scripts.d
 touch /root/scripts.d/lab-2622-welcome.txt
 cp ./deploy_cluster.sh /root/scripts.d
@@ -106,7 +106,7 @@ do
 ssh ceph-node${SERVER} "systemctl unmask rpcbind.socket ; systemctl unmask rpcbind.service ; systemctl enable --now rpcbind"
 done
 
-## Copy Ceph admin keys to workstation
+## Copy Ceph admin keys to the Bastion workstation
 curl https://public.dhe.ibm.com/ibmdl/export/pub/storage/ceph/ibm-storage-ceph-8-rhel-9.repo | sudo tee /etc/yum.repos.d/ibm-storage-ceph-8-rhel-9.repo
 dnf install ceph-common -y
 scp -pr ceph-node1:/etc/ceph/ /etc/
