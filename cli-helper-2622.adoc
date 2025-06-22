@@ -25,8 +25,8 @@ Accessing your Lab Workstation (the physical laptop) via ssh:
 
 [source, shell]
 ----
-export USERNAME={your_username}
-export USERIP={your_public_ip}
+export USERNAME={your_User_Name}
+export USERIP={your_Bastion_Public_IP_Address}
 chmod 0600 ~/Downloads/ssh_private_key.pem
 ssh -i ~/Downloads/ssh_private_key.pem -p 2223 ${USERNAME}@${USERIP}
 ----
@@ -38,15 +38,15 @@ Accessing your Workstation (the physical laptop) using a browser via CLI
 [source, shell]
 ----
 cmd.exe
-set USERIP={your_public_ip}
-start https://${your_public_ip}
+set USERIP={your_Bastion_Public_IP_Address}
+start https://${your_Bastion_Public_IP_Address}
 ----
 
 **MacOS/Linux:**
 
 [source, shell]
 ----
-set USERIP={your_public_ip}
+set USERIP={your_Bastion_Public_IP_Address}
 open -a "Google Chrome" "https://${USERIP}"
 open -a "Safari" "https://${USERIP}"
 ----
