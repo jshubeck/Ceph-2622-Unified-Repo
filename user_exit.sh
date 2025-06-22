@@ -5,8 +5,6 @@ USER_HOME=$(cat /etc/passwd | grep ^U | cut -d: -f6)
 USER=$(cat /etc/passwd | grep ^U | cut -d: -f1)
 cp ./cli-helper-2622.adoc $USER_HOME/cli-helper-2622.adoc
 cp ./cli-helper-2622.html $USER_HOME/cli-helper-2622.html
-cp ./cli-helper-1527.adoc $USER_HOME/cli-helper-1527.adoc
-cp ./cli-helper-1527.html $USER_HOME/cli-helper-1527.html
 mkdir /root/scripts.d
 touch /root/scripts.d/lab-2622-welcome.txt
 cp ./deploy_cluster.sh /root/scripts.d
