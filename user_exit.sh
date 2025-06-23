@@ -16,6 +16,9 @@ ssh ceph-node1 "mkdir /root/scripts.d"
 scp ./purge_cluster.sh root@ceph-node1:/root/scripts.d
 scp ./new_cluster_deploy.sh root@ceph-node1:/root/scripts.d
 
+## Install the NFS client
+dnf install -y nfs-utils
+
 ## Install AWS CLI client
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 unzip awscliv2.zip
