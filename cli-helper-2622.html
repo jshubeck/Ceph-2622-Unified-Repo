@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="adoc Studio 3">
+    <title>TXC 2025 - Lab 2622 Helper Commands</title>
+    <link rel="stylesheet" type="text/css" href="resources/style.css">
+  </head>
+  <body class="article toc2 toc-left" data-pagenums="body">
+    <div id="header">
+      <h1>TXC 2025 - Lab 2622 Helper Commands</h1>
+      <div id="toc" class="tocbase toc2">
+        <div id="toctitle">Table of Contents</div>
+        <ul class="sectlevel1">
+          <li>
+            <a href="#_introduction">1. Introduction</a>
+            <ul class="sectlevel2">
+              <li>
+                <a href="#_about_this_lab">1.1. About this Lab</a>
+              </li>
+              <li>
+                <a href="#_high_level_architecture">1.2. High Level Architecture</a>
+              </li>
+              <li>
+                <a href="#_accessing_your_lab_environment">1.3. Accessing your Lab environment</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="#_ibm_storage_ceph_configuration_using_the_dashboard">2. IBM Storage Ceph configuration using the Dashboard</a>
+            <ul class="sectlevel2">
+              <li>
+                <a href="#_introduction_2">2.1. Introduction</a>
+              </li>
+              <li>
+                <a href="#_connect_to_the_jump_workstation_desktop">2.2. Connect to the Jump Workstation Desktop</a>
+              </li>
+              <li>
+                <a href="#_set_the_admin_password">2.3. Set the admin password</a>
+              </li>
+              <li>
+                <a href="#_expand_the_cluster">2.4. Expand the cluster</a>
+              </li>
+              <li>
+                <a href="#_add_node_labels">2.5. Add Node Labels</a>
+              </li>
+              <li>
+                <a href="#_add_drivesosds_to_the_cluster">2.6. Add Drives/OSDs to the Cluster</a>
+              </li>
+              <li>
+                <a href="#_accept_grafana_self_signed_cert_to_view_performance_details">2.7. Accept Grafana Self-Signed Cert to view performance details</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="#_configuring_services">3. Configuring Services</a>
+            <ul class="sectlevel2">
+              <li>
+                <a href="#_label_hosts_for_specific_services">3.1. Label hosts for specific services</a>
+              </li>
+              <li>
+                <a href="#_service_creation">3.2. Service Creation</a>
+                <ul class="sectlevel3">
+                  <li>
+                    <a href="#_edit_grafana_service">3.2.1. Edit Grafana Service</a>
+                  </li>
+                  <li>
+                    <a href="#_rgw_service_creation">3.2.2. RGW Service Creation</a>
+                  </li>
+                  <li>
+                    <a href="#_nfs_service_creation">3.2.3. NFS Service Creation</a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a href="#_configure_storage">3.3. Configure Storage</a>
+                <ul class="sectlevel3">
+                  <li>
+                    <a href="#_rados_gateway_pool_creation">3.3.1. RADOS Gateway Pool Creation</a>
+                  </li>
+                  <li>
+                    <a href="#_ceph_file_system_configuration">3.3.2. Ceph File System Configuration</a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a href="#_configure_s3_user_and_s3_bucket">3.4. Configure S3 User and S3 Bucket</a>
+                <ul class="sectlevel3">
+                  <li>
+                    <a href="#_create_s3_user">3.4.1. Create S3 User</a>
+                  </li>
+                  <li>
+                    <a href="#_create_s3_bucket">3.4.2. Create S3 Bucket</a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a href="#_create_nfs_export_for_a_cephfs_directory">3.5. Create NFS Export for a CephFS Directory</a>
+              </li>
+              <li>
+                <a href="#_create_nfs_export_for_a_s3_bucket">3.6. Create NFS Export for a S3 Bucket</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="#_use_cases">4. Use Cases</a>
+            <ul class="sectlevel2">
+              <li>
+                <a href="#_object_use_case">4.1. Object Use Case</a>
+                <ul class="sectlevel3">
+                  <li>
+                    <a href="#_install_aws_cli">4.1.1. Install AWS CLI</a>
+                  </li>
+                  <li>
+                    <a href="#_configure_aws_cli">4.1.2. Configure AWS CLI</a>
+                  </li>
+                  <li>
+                    <a href="#_using_aws_client">4.1.3. Using AWS Client</a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a href="#_nfs_access">4.2. NFS Access</a>
+                <ul class="sectlevel3">
+                  <li>
+                    <a href="#_mount_nfs_export">4.2.1. Mount /nfs export</a>
+                  </li>
+                  <li>
+                    <a href="#_mount_demo_bucket_export">4.2.2. Mount /demo-bucket export</a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a href="#_rbd_access">4.3. RBD Access</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div id="content">
+      <div class="sect1">
+        <h2 id="_introduction">1. Introduction</h2>
+        <div class="sectionbody">
+          <div class="sect2">
+            <h3 id="_about_this_lab">1.1. About this Lab</h3>
+          </div>
+          <div class="sect2">
+            <h3 id="_high_level_architecture">1.2. High Level Architecture</h3>
+          </div>
+          <div class="sect2">
+            <h3 id="_accessing_your_lab_environment">1.3. Accessing your Lab environment</h3>
+            <div class="paragraph">
+              <p>Accessing your Lab Workstation (the physical laptop) via ssh:</p>
+            </div>
+            <div class="listingblock">
+              <div class="content">
+                <pre class="highlight"><code class="language-shell" data-lang="shell">export USERNAME={your_User_Name}
+export USERIP={your_Bastion_Public_IP_Address}
+chmod 0600 ~/Downloads/ssh_private_key.pem
+ssh -i ~/Downloads/ssh_private_key.pem -p 2223 ${USERNAME}@${USERIP}</code></pre>
+              </div>
+            </div>
+            <div class="paragraph">
+              <p>Accessing your Workstation (the physical laptop) using a browser via CLI</p>
+            </div>
+            <div class="paragraph">
+              <p><strong>Windows:</strong></p>
+            </div>
+            <div class="listingblock">
+              <div class="content">
+                <pre class="highlight"><code class="language-shell" data-lang="shell">cmd.exe
+set USERIP={your_Bastion_Public_IP_Address}
+start https://${your_Bastion_Public_IP_Address}</code></pre>
+              </div>
+            </div>
+            <div class="paragraph">
+              <p><strong>MacOS/Linux:</strong></p>
+            </div>
+            <div class="listingblock">
+              <div class="content">
+                <pre class="highlight"><code class="language-shell" data-lang="shell">set USERIP={your_Bastion_Public_IP_Address}
+open -a "Google Chrome" "https://${USERIP}"
+open -a "Safari" "https://${USERIP}"</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="sect1">
+        <h2 id="_ibm_storage_ceph_configuration_using_the_dashboard">2. IBM Storage Ceph configuration using the Dashboard</h2>
+        <div class="sectionbody">
+          <div class="sect2">
+            <h3 id="_introduction_2">2.1. Introduction</h3>
+          </div>
+          <div class="sect2">
+            <h3 id="_connect_to_the_jump_workstation_desktop">2.2. Connect to the Jump Workstation Desktop</h3>
+          </div>
+          <div class="sect2">
+            <h3 id="_set_the_admin_password">2.3. Set the admin password</h3>
+          </div>
+          <div class="sect2">
+            <h3 id="_expand_the_cluster">2.4. Expand the cluster</h3>
+          </div>
+          <div class="sect2">
+            <h3 id="_add_node_labels">2.5. Add Node Labels</h3>
+            <div class="listingblock">
+              <div class="content">
+                <pre class="highlight"><code class="language-shell" data-lang="shell">grep node1 /etc/hosts | awk '{ print $2 }' | sed -e 's/node1-/node[2-4]-/g'</code></pre>
+              </div>
+            </div>
+          </div>
+          <div class="sect2">
+            <h3 id="_add_drivesosds_to_the_cluster">2.6. Add Drives/OSDs to the Cluster</h3>
+          </div>
+          <div class="sect2">
+            <h3 id="_accept_grafana_self_signed_cert_to_view_performance_details">2.7. Accept Grafana Self-Signed Cert to view performance details</h3>
+            <div class="listingblock">
+              <div class="title">Generate URL for Certificate exception</div>
+              <div class="content">
+                <pre class="highlight"><code class="language-shell" data-lang="shell">grep node1 /etc/hosts | awk '{ print $2 }'| sed -e 's#ceph-node1-#https://ceph-node1-#g' | sed -e 's/$/:3000/'</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="sect1">
+        <h2 id="_configuring_services">3. Configuring Services</h2>
+        <div class="sectionbody">
+          <div class="sect2">
+            <h3 id="_label_hosts_for_specific_services">3.1. Label hosts for specific services</h3>
+          </div>
+          <div class="sect2">
+            <h3 id="_service_creation">3.2. Service Creation</h3>
+            <div class="sect3">
+              <h4 id="_edit_grafana_service">3.2.1. Edit Grafana Service</h4>
+            </div>
+            <div class="sect3">
+              <h4 id="_rgw_service_creation">3.2.2. RGW Service Creation</h4>
+            </div>
+            <div class="sect3">
+              <h4 id="_nfs_service_creation">3.2.3. NFS Service Creation</h4>
+            </div>
+          </div>
+          <div class="sect2">
+            <h3 id="_configure_storage">3.3. Configure Storage</h3>
+            <div class="sect3">
+              <h4 id="_rados_gateway_pool_creation">3.3.1. RADOS Gateway Pool Creation</h4>
+            </div>
+            <div class="sect3">
+              <h4 id="_ceph_file_system_configuration">3.3.2. Ceph File System Configuration</h4>
+            </div>
+          </div>
+          <div class="sect2">
+            <h3 id="_configure_s3_user_and_s3_bucket">3.4. Configure S3 User and S3 Bucket</h3>
+            <div class="sect3">
+              <h4 id="_create_s3_user">3.4.1. Create S3 User</h4>
+            </div>
+            <div class="sect3">
+              <h4 id="_create_s3_bucket">3.4.2. Create S3 Bucket</h4>
+            </div>
+          </div>
+          <div class="sect2">
+            <h3 id="_create_nfs_export_for_a_cephfs_directory">3.5. Create NFS Export for a CephFS Directory</h3>
+          </div>
+          <div class="sect2">
+            <h3 id="_create_nfs_export_for_a_s3_bucket">3.6. Create NFS Export for a S3 Bucket</h3>
+          </div>
+        </div>
+      </div>
+      <div class="sect1">
+        <h2 id="_use_cases">4. Use Cases</h2>
+        <div class="sectionbody">
+          <div class="sect2">
+            <h3 id="_object_use_case">4.1. Object Use Case</h3>
+            <div class="sect3">
+              <h4 id="_install_aws_cli">4.1.1. Install AWS CLI</h4>
+              <div class="listingblock">
+                <div class="content">
+                  <pre class="highlight"><code class="language-shell" data-lang="shell">sudo dnf install awscli -y</code></pre>
+                </div>
+              </div>
+            </div>
+            <div class="sect3">
+              <h4 id="_configure_aws_cli">4.1.2. Configure AWS CLI</h4>
+              <div class="listingblock">
+                <div class="title">Extract Autogenerated access and secret keys</div>
+                <div class="content">
+                  <pre class="highlight"><code class="language-shell" data-lang="shell">ssh ceph-node1 sudo radosgw-admin user info --uid=labuser | jq -r '.keys[0] | .access_key, .secret_key'</code></pre>
+                </div>
+              </div>
+            </div>
+            <div class="sect3">
+              <h4 id="_using_aws_client">4.1.3. Using AWS Client</h4>
+              <div class="listingblock">
+                <div class="title">Configure keys to use</div>
+                <div class="content">
+                  <pre class="highlight"><code class="language-shell" data-lang="shell">export AKEY=$(ssh ceph-node1 sudo radosgw-admin user info --uid=demouser | jq -r '.keys[0].access_key');echo $AKEY
+export SKEY=$(ssh ceph-node1 sudo radosgw-admin user info --uid=demouser | jq -r '.keys[0].secret_key');echo $SKEY
+aws configure set aws_access_key_id $AKEY --profile demouser 
+aws configure set aws_secret_access_key $SKEY --profile demouser</code></pre>
+                </div>
+              </div>
+              <div class="listingblock">
+                <div class="title">Configure endpoint specifics</div>
+                <div class="content">
+                  <pre class="highlight"><code class="language-shell" data-lang="shell">aws configure set endpoint_url http://ceph-node4 --profile demouser 
+aws configure set region multizg --profile demouser
+aws configure set ca_bundle ${HOME}/rootCA.pem  --profile demouser</code></pre>
+                </div>
+              </div>
+              <div class="listingblock">
+                <div class="title">Create an easy alias</div>
+                <div class="content">
+                  <pre class="highlight"><code class="language-shell" data-lang="shell">alias aws="aws --profile demouser"</code></pre>
+                </div>
+              </div>
+              <div class="listingblock">
+                <div class="title">1.  List available buckets</div>
+                <div class="content">
+                  <pre class="highlight"><code class="language-shell" data-lang="shell">aws s3 ls</code></pre>
+                </div>
+              </div>
+              <div class="listingblock">
+                <div class="title">2. Create a 10MiB file and upload it to the bucket</div>
+                <div class="content">
+                  <pre class="highlight"><code class="language-shell" data-lang="shell">truncate -s 10M 10MB.bin
+aws --acl=public-read-write s3 cp ./10MB.bin s3://demo-bucket/10MB.bin</code></pre>
+                </div>
+              </div>
+              <div class="listingblock">
+                <div class="title">3. Get a bucket listing to view the test object. Download the object to a local file</div>
+                <div class="content">
+                  <pre class="highlight"><code class="language-shell" data-lang="shell">aws s3 ls s3://demo-bucket
+aws s3 cp s3://demo-bucket/10MB.bin GET-10MB.bin</code></pre>
+                </div>
+              </div>
+              <div class="listingblock">
+                <div class="title">4. Verify the data integrity</div>
+                <div class="content">
+                  <pre class="highlight"><code class="language-shell" data-lang="shell">echo $(openssl dgst -md5 ./10MB.bin | awk '{print $2}');echo $(openssl dgst -md5 ./GET-10MB.bin | awk '{print $2}')</code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="sect2">
+            <h3 id="_nfs_access">4.2. NFS Access</h3>
+            <div class="sect3">
+              <h4 id="_mount_nfs_export">4.2.1. Mount /nfs export</h4>
+              <div class="listingblock">
+                <div class="title">1. Change user to root</div>
+                <div class="content">
+                  <pre class="highlight"><code class="language-shell" data-lang="shell">sudo -i</code></pre>
+                </div>
+              </div>
+              <div class="listingblock">
+                <div class="title">2. Create directory for mountpoint</div>
+                <div class="content">
+                  <pre class="highlight"><code class="language-shell" data-lang="shell">mkdir -p /mnt/nfs-cephfs</code></pre>
+                </div>
+              </div>
+              <div class="listingblock">
+                <div class="title">3. Mount the CephFS NFS export</div>
+                <div class="content">
+                  <pre class="highlight"><code class="language-shell" data-lang="shell">mount -t nfs -o vers=4.1,port=2049 ceph-node3:/nfs /mnt/nfs-cephfs</code></pre>
+                </div>
+              </div>
+              <div class="listingblock">
+                <div class="title">4. Get a listing of the files in the new mountpoint</div>
+                <div class="content">
+                  <pre class="highlight"><code class="language-shell" data-lang="shell">ls -al /mnt/nfs-cephfs</code></pre>
+                </div>
+              </div>
+              <div class="listingblock">
+                <div class="title">5. Use the touch command to create an empty file</div>
+                <div class="content">
+                  <pre class="highlight"><code class="language-shell" data-lang="shell">touch /mnt/nfs-cephfs/nfsfile</code></pre>
+                </div>
+              </div>
+              <div class="listingblock">
+                <div class="title">6. Get a listing of the files in the new mountpoint</div>
+                <div class="content">
+                  <pre class="highlight"><code class="language-shell" data-lang="shell">ls -al /mnt/nfs-cephfs</code></pre>
+                </div>
+              </div>
+            </div>
+            <div class="sect3">
+              <h4 id="_mount_demo_bucket_export">4.2.2. Mount /demo-bucket export</h4>
+              <div class="listingblock">
+                <div class="title">1. Create directory for mountpoint</div>
+                <div class="content">
+                  <pre class="highlight"><code class="language-shell" data-lang="shell">mkdir -p /mnt/demo-bucket</code></pre>
+                </div>
+              </div>
+              <div class="listingblock">
+                <div class="title">2. Mount the object bucket NFS export</div>
+                <div class="content">
+                  <pre class="highlight"><code class="language-shell" data-lang="shell">mount -t nfs -o vers=4.1,port=2049 ceph-node3:/demo-bucket /mnt/demo-bucket</code></pre>
+                </div>
+              </div>
+              <div class="listingblock">
+                <div class="title">4. Get a listing of the files in the new mountpoint</div>
+                <div class="content">
+                  <pre class="highlight"><code class="language-shell" data-lang="shell">ls -al /mnt/nfs-cephfs</code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="sect2">
+            <h3 id="_rbd_access">4.3. RBD Access</h3>
+            <div class="listingblock">
+              <div class="title">1. Connect to one of the Ceph nodes</div>
+              <div class="content">
+                <pre class="highlight"><code class="language-shell" data-lang="shell">ssh ceph-node1</code></pre>
+              </div>
+            </div>
+            <div class="listingblock">
+              <div class="title">2. Create a pool to receive the virtual block</div>
+              <div class="content">
+                <pre class="highlight"><code class="language-shell" data-lang="shell">ceph osd pool create rbd</code></pre>
+              </div>
+            </div>
+            <div class="listingblock">
+              <div class="title">3. Assign worjkload type to the pool</div>
+              <div class="content">
+                <pre class="highlight"><code class="language-shell" data-lang="shell">ceph osd pool application enable rbd rbd</code></pre>
+              </div>
+            </div>
+            <div class="listingblock">
+              <div class="title">4. Create virtual block device then list existing block devices</div>
+              <div class="content">
+                <pre class="highlight"><code class="language-shell" data-lang="shell">rbd create rbd/test --size=1Gi
+
+rbd -p rbd ls</code></pre>
+              </div>
+            </div>
+            <div class="paragraph">
+              <div class="title">5. Display information about virtual block device</div>
+              <p>[source, shell</p>
+            </div>
+            <div class="listingblock">
+              <div class="content">
+                <pre class="highlight"><code class="language-shell" data-lang="shell">rbd info rbd/test</code></pre>
+              </div>
+            </div>
+            <div class="listingblock">
+              <div class="title">6. Map virtual block device to node</div>
+              <div class="content">
+                <pre class="highlight"><code class="language-shell" data-lang="shell">rbd device map rbd/test</code></pre>
+              </div>
+            </div>
+            <div class="listingblock">
+              <div class="title">7. List virtual block devices attached to the node</div>
+              <div class="content">
+                <pre class="highlight"><code class="language-shell" data-lang="shell">rbd device list</code></pre>
+              </div>
+            </div>
+            <div class="listingblock">
+              <div class="title">8. Format the virtual block device</div>
+              <div class="content">
+                <pre class="highlight"><code class="language-shell" data-lang="shell">mkfs.ext4 /dev/rbd0</code></pre>
+              </div>
+            </div>
+            <div class="listingblock">
+              <div class="title">9. Mount the file system you just created</div>
+              <div class="content">
+                <pre class="highlight"><code class="language-shell" data-lang="shell">mkdir /mnt/myrbd
+mount /dev/rbd0 /mnt/myrbd</code></pre>
+              </div>
+            </div>
+            <div class="listingblock">
+              <div class="title">10. Write some data to the filesystem</div>
+              <div class="content">
+                <pre class="highlight"><code class="language-shell" data-lang="shell">echo "Writing to my Ceph RBD Image" &gt;/mnt/myrbd/test.file
+dd if=/dev/zero of=/mnt/myrbd/dd.file bs=4k count=1000</code></pre>
+              </div>
+            </div>
+            <div class="listingblock">
+              <div class="title">11. Check how the virtual block device is being used</div>
+              <div class="content">
+                <pre class="highlight"><code class="language-shell" data-lang="shell">ls -al /mnt/myrbd
+
+rbd du rbd/test</code></pre>
+              </div>
+            </div>
+            <div class="listingblock">
+              <div class="title">12. Cleanup</div>
+              <div class="content">
+                <pre class="highlight"><code class="language-shell" data-lang="shell">umount /mnt/myrbd
+rbd device unmap rbd/test
+rbd rm rbd/test</code></pre>
+              </div>
+            </div>
+            <div class="listingblock">
+              <div class="title">13. Disconnect</div>
+              <div class="content">
+                <pre class="highlight"><code class="language-shell" data-lang="shell">exit
+exit</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="footer">
+      <div id="footer-text">
+Last updated Jun 22, 2025 at 6:37:42 AM
+      </div>
+    </div>
+  </body>
+</html>
