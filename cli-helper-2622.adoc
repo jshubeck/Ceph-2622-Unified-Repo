@@ -238,10 +238,10 @@ ls -al /mnt/nfs-cephfs
 
 ### RBD Access
 
-.1. Connect to one of the Ceph nodes
+.1. The RBD client experience will be performed on the lab Workstation
 [source, shell]
 ----
-ssh ceph-node1
+sudo -i
 ----
 
 .2. Create a pool to receive the virtual block
@@ -259,7 +259,7 @@ ceph osd pool application enable rbd rbd
 .4. Create virtual block device then list existing block devices
 [source, shell]
 ----
-rbd create rbd/test --size=1Gi
+rbd create rbd/rbdimage --size=100Gi
 
 rbd -p rbd ls
 ----
@@ -267,13 +267,13 @@ rbd -p rbd ls
 .5. Display information about virtual block device
 [source, shell
 ----
-rbd info rbd/test
+rbd info rbd/rbdimage
 ----
 
 .6. Map virtual block device to node
 [source, shell]
 ----
-rbd device map rbd/test
+rbd device map rbd/rbdimage
 ----
 
 .7. List virtual block devices attached to the node
@@ -292,20 +292,23 @@ mkfs.ext4 /dev/rbd0
 [source, shell]
 ----
 mkdir /mnt/myrbd
-mount /dev/rbd0 /mnt/myrbd
+mount /dev/rbd0 /mnt/rbdimage
 ----
 
 .10. Write some data to the filesystem
 [source, shell]
 ----
-echo "Writing to my Ceph RBD Image" >/mnt/myrbd/test.file
-dd if=/dev/zero of=/mnt/myrbd/dd.file bs=4k count=1000
+mkdir /mnt/rbdimage/dir1
+mkdir /mnt/rbdimage/dir2
+touch /mnt/rbdimage/dir1/atestfile
+echo "Writing to my Ceph RBD Image" >/mnt/myrbd/textfile.txt
+dd if=/dev/zero of=/mnt/myrbd/dd.file bs=10M count=1
 ----
 
 .11. Check how the virtual block device is being used
 [source, shell]
 ----
-ls -al /mnt/myrbd
+ls -al /mnt/rbdimage/dir1
 
 rbd du rbd/test
 ----
@@ -313,8 +316,8 @@ rbd du rbd/test
 .12. Cleanup
 [source, shell]
 ----
-umount /mnt/myrbd
-rbd device unmap rbd/test
+umount /mnt/rbdimage
+rbd device unmap rbd/rbdimage
 rbd rm rbd/test
 ----
 
