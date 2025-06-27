@@ -9,7 +9,6 @@ mkdir /root/scripts.d
 cp ./deploy_cluster.sh /root/scripts.d
 cp ./break_and_fix1.yaml /root/scripts.d
 cp ./break_and_fix2.yaml /root/scripts.d
-cp ./Cotton.jpeg /root/Cotton.jpeg
 chown $USER $USER_HOME/cli-helper-2622*
 chmod 644 $USER_HOME/cli-helper-2622*
 ssh ceph-node1 "mkdir /root/scripts.d"
